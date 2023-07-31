@@ -81,8 +81,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             padding: const EdgeInsets.symmetric(vertical: 35,horizontal: 10),
                             child: Container(
                               decoration: BoxDecoration(
-                              color: Colors.black87,
-                                  backgroundBlendMode: BlendMode.dstATop,
+                              color: Colors.black.withOpacity(.1),
+                                //backgroundBlendMode: BlendMode.dstATop,
                                   borderRadius: BorderRadius.circular(20),
                               ),
                               child: Center(

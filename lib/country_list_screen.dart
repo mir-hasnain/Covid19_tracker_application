@@ -1,4 +1,5 @@
 import 'package:covid_tracker/services/countries_list.dart';
+import 'package:covid_tracker/specific_country_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 class CountryDataScreen extends StatefulWidget {
@@ -70,6 +71,19 @@ class _CountryDataScreenState extends State<CountryDataScreen> {
                              return Padding(
                                padding: const EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
                                child: ListTile(
+                                 onTap: (){
+                                   Navigator.push(context, MaterialPageRoute(builder: (context) => SpecificCountryDataScreen(
+                                       image: snapshot.data![index]['countryInfo']['flag'].toString(),
+                                       name: snapshot.data![index]['country'].toString(),
+                                       active: snapshot.data![index]['active'].toString(),
+                                       critical: snapshot.data![index]['critical'].toString(),
+                                       totalDeaths: snapshot.data![index]['todayDeaths'].toString(),
+                                       totalRecovered: snapshot.data![index]['todayRecovered'].toString(),
+                                       totalCases: snapshot.data![index]['cases'].toString(),
+                                       tests: snapshot.data![index]['tests'].toString(),
+                                       totalPopulation: snapshot.data![index]['population'].toString())
+                                   ));
+                                 },
                                  leading: Image(
                                    height: 50,
                                    width: 50,
@@ -80,10 +94,25 @@ class _CountryDataScreenState extends State<CountryDataScreen> {
                                  subtitle: Text(snapshot.data![index]['cases'].toString(),style: TextStyle(color: Colors.white.withOpacity(.8)),),
                                ),
                              );
-                           }else if(countryName.toLowerCase().contains(searchValue.text.toLowerCase())){
+                           }
+                           else if(countryName.toLowerCase().contains(searchValue.text.toLowerCase())){
                              return Padding(
                                padding: const EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
                                child: ListTile(
+                                 onTap: (){
+                                   Navigator.push(context, MaterialPageRoute(builder: (context) => SpecificCountryDataScreen(
+                                       image: snapshot.data![index]['countryInfo']['flag'].toString(),
+                                       name: snapshot.data![index]['country'].toString(),
+                                       active: snapshot.data![index]['active'].toString(),
+                                       critical: snapshot.data![index]['critical'].toString(),
+                                       totalDeaths: snapshot.data![index]['todayDeaths'].toString(),
+                                       totalRecovered: snapshot.data![index]['todayRecovered'].toString(),
+                                       totalCases: snapshot.data![index]['cases'].toString(),
+                                       tests: snapshot.data![index]['tests'].toString(),
+                                     totalPopulation: snapshot.data![index]['population'].toString(),
+                                   )
+                                   ));
+                                 },
                                  leading: Image(
                                    height: 50,
                                    width: 50,
@@ -95,7 +124,9 @@ class _CountryDataScreenState extends State<CountryDataScreen> {
                                ),
                              );
                            }else {
-                             return Container();
+                             return Container(
+
+                             );
                            }
                          });
                     }
