@@ -29,130 +29,140 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          color: Colors.black87,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+        child: RefreshIndicator(
+          onRefresh:()async{
+            worldStates.fetchDataWorldStates();
+          },
+          child: ListView(
             children: [
-              FutureBuilder(
-                  future: worldStates.fetchDataWorldStates(),
-                  builder: (context, AsyncSnapshot<WorldStatesModel> snapshot) {
-                    if (!snapshot.hasData) {
-                      return Expanded(
-                        flex: 1,
-                        child: SpinKitFadingCircle(
-                          color: Colors.white,
-                          controller: controller,
-                        ),
-                      );
-                    } else {
-                      return Column(
-                        children: [
-                          PieChart(
-                            dataMap: {
-                              'Deaths': double.parse(
-                                  snapshot.data!.deaths.toString()),
-                              'Total Cases':
-                                  double.parse(snapshot.data!.cases.toString()),
-                              'Recovered': double.parse(
-                                  snapshot.data!.recovered.toString()),
-                            },
-                            chartValuesOptions: const ChartValuesOptions(
-                              chartValueStyle: TextStyle(color: Colors.white),
-                              showChartValuesInPercentage: true,
-                              showChartValues: true,
-                              showChartValueBackground: false,
-                            ),
-                            chartLegendSpacing:
-                                MediaQuery.of(context).size.width * .15,
-                            // TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
-                            chartType: ChartType.ring,
-                            chartRadius:
-                                MediaQuery.of(context).size.width * .35,
-                            animationDuration:
-                                const Duration(milliseconds: 1500),
-                            legendOptions: const LegendOptions(
-                                legendTextStyle: TextStyle(color: Colors.white),
-                                legendPosition: LegendPosition.left),
-                            colorList: colorList,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 35,horizontal: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(.1),
-                                //backgroundBlendMode: BlendMode.dstATop,
-                                  borderRadius: BorderRadius.circular(20),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 1,
+                width: MediaQuery.of(context).size.width * 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    FutureBuilder(
+                        future: worldStates.fetchDataWorldStates(),
+                        builder: (context, AsyncSnapshot<WorldStatesModel> snapshot) {
+                          if (!snapshot.hasData) {
+                            return Expanded(
+                              flex: 1,
+                              child: SpinKitFadingCircle(
+                                color: Colors.white,
+                                controller: controller,
                               ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                MyRow(
-                                  title: 'Total Cases',
-                                  value: snapshot.data!.cases.toString(),
+                            );
+                          } else {
+                            return Column(
+                              children: [
+                                PieChart(
+                                  dataMap: {
+                                    'Deaths': double.parse(
+                                        snapshot.data!.deaths.toString()),
+                                    'Total Cases':
+                                    double.parse(snapshot.data!.cases.toString()),
+                                    'Recovered': double.parse(
+                                        snapshot.data!.recovered.toString()),
+                                  },
+                                  chartValuesOptions: const ChartValuesOptions(
+                                    chartValueStyle: TextStyle(color: Colors.white),
+                                    showChartValuesInPercentage: true,
+                                    showChartValues: true,
+                                    showChartValueBackground: false,
+                                  ),
+                                  chartLegendSpacing:
+                                  MediaQuery.of(context).size.width * .15,
+                                  // TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
+                                  chartType: ChartType.ring,
+                                  chartRadius:
+                                  MediaQuery.of(context).size.width * .35,
+                                  animationDuration:
+                                  const Duration(milliseconds: 1500),
+                                  legendOptions: const LegendOptions(
+                                      legendTextStyle: TextStyle(color: Colors.white),
+                                      legendPosition: LegendPosition.left),
+                                  colorList: colorList,
                                 ),
-                                MyRow(
-                                  title: 'Deaths',
-                                  value: snapshot.data!.deaths.toString(),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 35,horizontal: 10),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(.1),
+                                      //backgroundBlendMode: BlendMode.dstATop,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          MyRow(
+                                            title: 'Total Cases',
+                                            value: snapshot.data!.cases.toString(),
+                                          ),
+                                          MyRow(
+                                            title: 'Deaths',
+                                            value: snapshot.data!.deaths.toString(),
+                                          ),
+                                          MyRow(
+                                            title: 'Recovered',
+                                            value: snapshot.data!.recovered.toString(),
+                                          ),
+                                          MyRow(
+                                            title: 'Active',
+                                            value: snapshot.data!.active.toString(),
+                                          ),
+                                          MyRow(
+                                            title: 'Critical',
+                                            value: snapshot.data!.critical.toString(),
+                                          ),
+                                          MyRow(
+                                            title: 'Today cases',
+                                            value: snapshot.data!.todayCases.toString(),
+                                          ),
+                                          MyRow(
+                                            title: 'Today Deaths',
+                                            value: snapshot.data!.todayDeaths.toString(),
+                                          ),
+                                          MyRow(
+                                            title: 'Today Recovered',
+                                            value:
+                                            snapshot.data!.todayRecovered.toString(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                MyRow(
-                                  title: 'Recovered',
-                                  value: snapshot.data!.recovered.toString(),
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const CountryDataScreen()));
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width * .9,
+                                    height: MediaQuery.of(context).size.height * .065,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xff1aa260),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Center(
+                                        child: Text(
+                                          'Track Countries',
+                                          style:
+                                          TextStyle(fontSize: 18, color: Colors.white),
+                                        )),
+                                  ),
                                 ),
-                                MyRow(
-                                  title: 'Active',
-                                  value: snapshot.data!.active.toString(),
-                                ),
-                                MyRow(
-                                  title: 'Critical',
-                                  value: snapshot.data!.critical.toString(),
-                                ),
-                                MyRow(
-                                  title: 'Today cases',
-                                  value: snapshot.data!.todayCases.toString(),
-                                ),
-                                MyRow(
-                                  title: 'Today Deaths',
-                                  value: snapshot.data!.todayDeaths.toString(),
-                                ),
-                                MyRow(
-                                  title: 'Today Recovered',
-                                  value:
-                                      snapshot.data!.todayRecovered.toString(),
-                                ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const CountryDataScreen()));
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * .9,
-                              height: MediaQuery.of(context).size.height * .065,
-                              decoration: BoxDecoration(
-                                color: const Color(0xff1aa260),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: const Center(
-                                  child: Text(
-                                'Track Countries',
-                                style:
-                                    TextStyle(fontSize: 18, color: Colors.white),
-                              )),
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                  })
+                              ],
+                            );
+                          }
+                        })
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
+        )
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:covid_tracker/home_screen.dart';
 import 'package:covid_tracker/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +14,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen()
+      theme: ThemeData.dark(),
+      home: const SplashScreen()
     );
   }
 }

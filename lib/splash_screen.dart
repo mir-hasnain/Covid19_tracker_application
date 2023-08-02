@@ -32,39 +32,34 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.black87,
-        height: MediaQuery.of(context).size.height * 1,
-        width: MediaQuery.of(context).size.width * 1,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            //SizedBox(height: MediaQuery.of(context).size.height * .2,),
-            AnimatedBuilder(
-                animation: controller,
-                child: Center(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height * .4,
-                    width: MediaQuery.of(context).size.width * 1,
-                    child: const Image(image: AssetImage('images/virus.png',),
-                    ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          //SizedBox(height: MediaQuery.of(context).size.height * .2,),
+          AnimatedBuilder(
+              animation: controller,
+              child: Center(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * .4,
+                  width: MediaQuery.of(context).size.width * 1,
+                  child: const Image(image: AssetImage('images/virus.png',),
                   ),
                 ),
-                builder: (BuildContext context, Widget? child){
-                  return Transform.rotate(
-                      angle: controller.value * 2.5 * math.pi,
-                    child: child
-                  );
-                }
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * .08,),
-            const Text('Covid-19 \n Tracker',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),
-            ),
-          ],
-        ),
+              ),
+              builder: (BuildContext context, Widget? child){
+                return Transform.rotate(
+                    angle: controller.value * 2.5 * math.pi,
+                  child: child
+                );
+              }
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * .08,),
+          const Text('Covid-19 \n Tracker',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),
+          ),
+        ],
       ),
     );
   }
